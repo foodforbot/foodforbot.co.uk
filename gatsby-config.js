@@ -33,7 +33,6 @@ module.exports = {
         trackingId: "UA-161440347-1",
       },
     },
-    ,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-smoothscroll`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
