@@ -2,7 +2,7 @@ import React from "react"
 import scrollTo from "gatsby-plugin-smoothscroll"
 import styled from "styled-components"
 
-import SEO from "../components/SEO"
+import SEO from "../components/seo"
 import Section from "../components/Section"
 import Button from "../components/Button"
 import ProfileCard from "../components/ProfileCard"
