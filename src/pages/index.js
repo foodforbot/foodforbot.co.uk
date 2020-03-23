@@ -1,4 +1,5 @@
 import React from "react"
+import { graphql } from "gatsby"
 import scrollTo from "gatsby-plugin-smoothscroll"
 import styled from "styled-components"
 
@@ -8,10 +9,6 @@ import Button from "../components/Button"
 import ProfileCard from "../components/ProfileCard"
 import ContactLink from "../components/ContactLink"
 import Footer from "../components/Footer"
-
-import LOGO from "../images/foodforbot_logo.png"
-import RAMSAY_AVATAR from "../images/ramsay.jpg"
-import DAZ_AVATAR from "../images/daz.jpg"
 
 const Logo = styled.img`
   height: 80px;
@@ -29,81 +26,148 @@ const ProfileSection = styled.div`
   }
 `
 
-export default function IndexPage() {
-  return (
-    <>
-      <SEO
-        title="home"
-        keywords={[
-          `web`,
-          `development`,
-          `ramsay`,
-          `daz`,
-          `apps`,
-          `drinks`,
-          `food`,
-          `beer`,
-          `spirits`,
-          `pizza`,
-        ]}
-      />
-      <div>
-        <Section id="food-for-bot" color="#0AD2FE">
-          <Logo src={LOGO} alt="foodforbot logo" />
-          <h1>Food for Bot</h1>
-          <h2>We are here to help the food & drink industry</h2>
-          <Text>Now is not the time for marketing jargon.</Text>
-          <Text>
-            We build websites for businesses in the food & drink industry.
-          </Text>
-          <Text>We are here to help kick-start your digital journey.</Text>
-          <div style={{ textAlign: "center", marginTop: 50 }}>
-            <Button
-              title="Get in touch"
-              onClick={() => scrollTo("#contact-us")}
-            />
-          </div>
-        </Section>
-        <Section id="who-are-we" color="#FED70A">
-          <h2>Who are we?</h2>
-          <div>We are Food for Bot.</div>
-          <div style={{ margin: "0 auto", maxWidth: 750 }}>
-            <ProfileSection>
-              <ProfileCard
-                avatar={RAMSAY_AVATAR}
-                name="Ramsay"
-                description="Bot 1: Loves pizza. Builds websites and apps using good tech."
+export default class IndexPage extends React.Component {
+  render() {
+    const {
+      title,
+      tags,
+      logo,
+      heroText,
+      tagLine,
+      description,
+      getInTouchButtonLabel,
+      whoAreWeTitle,
+      whoAreWeDescription,
+      botOneName,
+      botOneDescription,
+      botOneAvatar,
+      botTwoName,
+      botTwoDescription,
+      botTwoAvatar,
+      contactUsTitle,
+      contactUsDescription,
+      email,
+      phone,
+    } = this.props.data.contentfulHomePage
+
+    return (
+      <>
+        <SEO title={title} keywords={tags} />
+        <div>
+          <Section id="food-for-bot" color="#0AD2FE">
+            <Logo src={logo.fixed.src} alt="foodforbot logo" />
+            <h1>{heroText}</h1>
+            <h2>{tagLine.tagLine}</h2>
+            {description.description.split("\n").map(line => (
+              <Text>{line}</Text>
+            ))}
+            <div style={{ textAlign: "center", marginTop: 50 }}>
+              <Button
+                title={getInTouchButtonLabel}
+                onClick={() => scrollTo("#contact-us")}
               />
-              <ProfileCard
-                avatar={DAZ_AVATAR}
-                name="Daz"
-                description="Bot 2: Also loves pizza. Does design stuff and anything else that
-              lets Ramsay do web stuff."
+            </div>
+          </Section>
+          <Section id="who-are-we" color="#FED70A">
+            <h2>{whoAreWeTitle}</h2>
+            {whoAreWeDescription.whoAreWeDescription.split("\n").map(line => (
+              <Text>{line}</Text>
+            ))}
+            <div style={{ margin: "0 auto", maxWidth: 750 }}>
+              <ProfileSection>
+                <ProfileCard
+                  avatar={botOneAvatar.fixed.src}
+                  name={botOneName}
+                  description={botOneDescription.botOneDescription}
+                />
+                <ProfileCard
+                  avatar={botTwoAvatar.fixed.src}
+                  name={botTwoName}
+                  description={botTwoDescription.botTwoDescription}
+                />
+              </ProfileSection>
+            </div>
+          </Section>
+          <Section id="contact-us" color="#FF4A4A" style={{ color: "#ffffff" }}>
+            <h2>{contactUsTitle}</h2>
+            {contactUsDescription.contactUsDescription.split("\n").map(line => (
+              <Text>{line}</Text>
+            ))}
+            <div style={{ padding: "30px 0" }}>
+              <ContactLink
+                label="Email"
+                link={email}
+                href={`mailto:${email}`}
+                containerStyle={{ margin: "0 0 30px 0" }}
               />
-            </ProfileSection>
-          </div>
-        </Section>
-        <Section id="contact-us" color="#FF4A4A" style={{ color: "#ffffff" }}>
-          <h2>Contact us</h2>
-          <Text>Get in touch.</Text>
-          <Text>Consulations are free.</Text>
-          <Text>We will be open and upfront on the short term cost.</Text>
-          <div style={{ padding: "30px 0" }}>
-            <ContactLink
-              label="Email"
-              link="hello@foodforbot.co.uk"
-              href="mailto:hello@foodforbot.co.uk"
-              containerStyle={{ margin: "0 0 30px 0" }}
-            />
-            <ContactLink
-              label="Call"
-              link="07853650201"
-              href="tel:07853650201"
-            />
-          </div>
-        </Section>
-        <Footer />
-      </div>
-    </>
-  )
+              <ContactLink label="Call" link={phone} href={`tel:${phone}`} />
+            </div>
+          </Section>
+          <Footer />
+        </div>
+      </>
+    )
+  }
 }
+
+export const pageQuery = graphql`
+  query HomeQuery {
+    contentfulHomePage(title: { eq: "home" }) {
+      title
+      tags
+      logo {
+        fixed(resizingBehavior: SCALE, height: 80) {
+          src
+        }
+      }
+      heroText
+      tagLine {
+        tagLine
+      }
+      description {
+        description
+      }
+      getInTouchButtonLabel
+      whoAreWeTitle
+      whoAreWeDescription {
+        whoAreWeDescription
+      }
+      botOneName
+      botOneDescription {
+        botOneDescription
+      }
+      botOneAvatar {
+        fixed(
+          height: 230
+          width: 230
+          quality: 100
+          resizingBehavior: FILL
+          toFormat: PNG
+        ) {
+          src
+        }
+      }
+      botTwoName
+      botTwoDescription {
+        botTwoDescription
+      }
+      botTwoAvatar {
+        fixed(
+          height: 230
+          width: 230
+          quality: 100
+          resizingBehavior: FILL
+          toFormat: PNG
+        ) {
+          src
+        }
+      }
+      contactUsTitle
+      contactUsDescription {
+        contactUsDescription
+      }
+      email
+      phone
+    }
+  }
+`

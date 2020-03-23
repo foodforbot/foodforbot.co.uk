@@ -35,6 +35,13 @@ module.exports = {
     },
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-smoothscroll`,
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `87es4c76nrn9`,
+        accessToken: `ZYc24RjL3SUQENhi-kp2BI0MtuagaTe6EgimAeMGAek`,
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

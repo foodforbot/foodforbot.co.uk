@@ -12,23 +12,11 @@ const Card = styled.div`
   display: inline-block;
 `
 
-const Avatar = styled.div`
-  background-image: url(${props => props.avatar});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  display: inline-block;
-  width: 225px;
-  height: 225px;
-  border-radius: ${225 / 2}px;
-  background-color: #c4c4c4;
-`
-
 export default function ProfileCard({ avatar, name, description }) {
   return (
     <Container>
       <Card>
-        <Avatar avatar={avatar} />
+        <img src={`${avatar + "&r=max"}`} alt={`${name}s avatar`} />
         <h2>{name}</h2>
         <div>{description}</div>
       </Card>
