@@ -23,7 +23,7 @@ module.exports = {
       options: {
         name: `foodforbot`,
         short_name: `foodforbot`,
-        start_url: `/`,
+        start_url: `https://www.foodforbot.co.uk`,
         background_color: `#0AD2FE`,
         theme_color: `#0AD2FE`,
         display: `minimal-ui`,
