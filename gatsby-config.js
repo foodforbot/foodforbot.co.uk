@@ -3,6 +3,7 @@ module.exports = {
     title: `foodforbot`,
     description: `We build websites for the food & drink industry.`,
     author: `@ramsayshiells`,
+    siteUrl: `https://www.foodforbot.co.uk`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -16,6 +17,7 @@ module.exports = {
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-robots-txt`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
