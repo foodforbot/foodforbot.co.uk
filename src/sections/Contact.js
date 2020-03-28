@@ -1,13 +1,9 @@
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
-import styled from "styled-components"
+import ReactMarkdown from "react-markdown"
 
 import Section from "../components/Section"
 import ContactLink from "../components/ContactLink"
-
-const Text = styled.div`
-  margin: 10px 0;
-`
 
 const Contact = () => (
   <Section id="contact" color="#FF4A4A" style={{ color: "#ffffff" }}>
@@ -18,7 +14,9 @@ const Contact = () => (
             contact {
               title
               description {
-                description
+                childMarkdownRemark {
+                  rawMarkdownBody
+                }
               }
               email
               phone
@@ -37,9 +35,9 @@ const Contact = () => (
         return (
           <>
             <h2>{title}</h2>
-            {description.description.split("\n").map(line => (
-              <Text>{line}</Text>
-            ))}
+            <ReactMarkdown
+              source={description.childMarkdownRemark.rawMarkdownBody}
+            />
             <div style={{ padding: "30px 0" }}>
               <ContactLink
                 label="Email"

@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, StaticQuery } from "gatsby"
 import scrollTo from "gatsby-plugin-smoothscroll"
 import styled from "styled-components"
+import ReactMarkdown from "react-markdown"
 
 import Section from "../components/Section"
 import Button from "../components/Button"
@@ -9,10 +10,6 @@ import Button from "../components/Button"
 const Logo = styled.img`
   height: 80px;
   margin-bottom: 25px;
-`
-
-const Text = styled.div`
-  margin: 10px 0;
 `
 
 const About = () => (
@@ -24,10 +21,14 @@ const About = () => (
             about {
               title
               description {
-                description
+                childMarkdownRemark {
+                  rawMarkdownBody
+                }
               }
               details {
-                details
+                childMarkdownRemark {
+                  rawMarkdownBody
+                }
               }
               logo {
                 fixed(resizingBehavior: SCALE, height: 80) {
@@ -55,13 +56,13 @@ const About = () => (
           <>
             <Logo src={logo.fixed.src} alt="foodforbot logo" />
             <h1>{title}</h1>
-            <h2>{description.description}</h2>
-            {details.details.split("\n").map(line => (
-              <Text>{line}</Text>
-            ))}
+            <h2>{description.childMarkdownRemark.rawMarkdownBody}</h2>
+            <ReactMarkdown
+              source={details.childMarkdownRemark.rawMarkdownBody}
+            />
             <div style={{ textAlign: "center", marginTop: 50 }}>
               <Button
-                title={button.title}
+                title={`${button.title}`}
                 onClick={() => scrollTo(`#${button.scrollTo}`)}
               />
             </div>

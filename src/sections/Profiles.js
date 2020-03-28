@@ -1,13 +1,10 @@
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
 import styled from "styled-components"
+import ReactMarkdown from "react-markdown"
 
 import Section from "../components/Section"
 import ProfileCard from "../components/ProfileCard"
-
-const Text = styled.div`
-  margin: 10px 0;
-`
 
 const ProfileSection = styled.div`
   display: flex;
@@ -25,12 +22,16 @@ const Profiles = () => (
             who {
               title
               description {
-                description
+                childMarkdownRemark {
+                  rawMarkdownBody
+                }
               }
               profiles {
                 name
                 description {
-                  description
+                  childMarkdownRemark {
+                    rawMarkdownBody
+                  }
                 }
                 avatar {
                   fixed(
@@ -54,16 +55,18 @@ const Profiles = () => (
         return (
           <>
             <h2>{title}</h2>
-            {description.description.split("\n").map(line => (
-              <Text>{line}</Text>
-            ))}
+            <ReactMarkdown
+              source={description.childMarkdownRemark.rawMarkdownBody}
+            />
             <div style={{ margin: "0 auto", maxWidth: 750 }}>
               <ProfileSection>
                 {profiles.map(({ name, description, avatar }) => (
                   <ProfileCard
                     avatar={avatar.fixed.src}
                     name={name}
-                    description={description.description}
+                    description={
+                      description.childMarkdownRemark.rawMarkdownBody
+                    }
                   />
                 ))}
               </ProfileSection>
