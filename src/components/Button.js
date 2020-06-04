@@ -26,7 +26,7 @@ const ButtonContainer = styled.div`
     transform: translateY(2px) translateX(-2px);
   }
 `
-
+//
 export default function Button({ title, onClick }) {
   return <ButtonContainer onClick={onClick}>{title}</ButtonContainer>
 }
